@@ -9,7 +9,7 @@ export class PostModel extends Model {
 content: string
 
 // Relationships
-@ManyToOne(() => User, (user) => user.post)
+@ManyToOne(() => User, (user) => user.post, {nullable: true})
 user: User
 
 }

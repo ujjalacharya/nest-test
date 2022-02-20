@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
-    console.log("username")
+
     const user = await this.usersService.findOne(username);
 
     if (user && user.password === password) {
@@ -26,8 +26,6 @@ export class AuthService {
 
   async login(user: User) {
 
-    console.log({user})
-
     const payload = { sub: user.id, username: user.username };
 
     return { accessToken: this.jwtService.sign(payload) };
@@ -35,7 +33,6 @@ export class AuthService {
 
   async register(registerUserDto: LoginUserDto) {
     const userFound = await this.usersService.findOne(registerUserDto.username);
-    console.log(userFound)
     if (userFound) throw new BadRequestException('username already exists');
 
     const { username, password } = registerUserDto;

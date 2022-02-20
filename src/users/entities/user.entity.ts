@@ -5,11 +5,11 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class User extends Model {
-  @Column({ unique: true })
+  @Column({ nullable: false, default: 'sd' })
   username: string;
 
-  @Column({nullable: true, default: "fsdf"})
-  email: string
+  @Column({nullable: true, default: 'smth'})
+  email: string;
 
   @Column()
   password: string;
