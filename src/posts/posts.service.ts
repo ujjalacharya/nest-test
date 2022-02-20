@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -17,6 +16,7 @@ export class PostsService {
 
     const post = this.postsRepository.create({
       content: createPostDto.content,
+      user: req.user.userId
     });
     this.postsRepository.save(post);
     return post;
@@ -27,7 +27,7 @@ export class PostsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} post`;
+    return this.postsRepository.findOne({where: {id}, relations: ['user']})
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
@@ -35,6 +35,6 @@ export class PostsService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} post`;
+    return `Yes you can remove this post`;
   }
 }

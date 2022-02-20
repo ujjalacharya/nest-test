@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { Roles } from 'src/auth/role.decorator';
+import { IsCreatorGuard } from './is-creator.guard';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -49,6 +50,8 @@ export class PostsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, IsCreatorGuard)
   remove(@Param('id') id: string) {
     return this.postsService.remove(+id);
   }

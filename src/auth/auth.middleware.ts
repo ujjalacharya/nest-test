@@ -21,15 +21,12 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     try {
-      const { sub, role, username }: any = verify(
-        accessToken,
-        'smthsmth',
-      );
+      const { sub, role, username }: any = verify(accessToken, 'smthsmth');
       user = await this.userService.findOne(username);
     } catch (error) {
+      console.log({ error });
       throw new ForbiddenException('Please register or sign in.');
     }
-
 
     if (user) {
       req.user = user;
