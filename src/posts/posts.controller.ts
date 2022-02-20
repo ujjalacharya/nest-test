@@ -15,6 +15,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { Roles } from 'src/auth/role.decorator';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -24,11 +25,15 @@ export class PostsController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @Roles('admin')
   create(@Request() req: any, @Body() createPostDto: CreatePostDto) {
     return this.postsService.create(req, createPostDto);
   }
 
   @Get()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles('admin')
   findAll() {
     return this.postsService.findAll();
   }

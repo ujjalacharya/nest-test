@@ -23,7 +23,7 @@ export class PostsService {
   }
 
   findAll() {
-    return `This action returns all posts`;
+    return this.postsRepository.find()
   }
 
   findOne(id: number) {

@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   findOne(username: string) {
-    return this.userRepository.findOne({where: {username}})
+    return this.userRepository.findOne({where: {username}, relations: ['userRole']})
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
