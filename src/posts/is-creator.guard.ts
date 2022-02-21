@@ -17,8 +17,6 @@ export class IsCreatorGuard implements CanActivate {
 
     if (!user || !params) return false;
 
-    console.log({user, params})
-
     const username = user.username;
     const postId = params.id;
 
@@ -28,7 +26,6 @@ export class IsCreatorGuard implements CanActivate {
     if (foundUser.userRole.role === 'admin') return true; // allow admins to get make requests
 
     const foundPost = await this.postService.findOne(postId);
-    console.log(foundUser.id, foundPost.user)
     let isAuthor = foundUser.id === foundPost.user.id;
     return isAuthor;
   }
